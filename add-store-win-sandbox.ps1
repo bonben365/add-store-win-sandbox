@@ -1,3 +1,15 @@
+<#
+==================================================================================================================
+Name:           Install Windows Store in Windows Sandbox
+Description:    This script Installs Install Windows Store in Windows Sandbox
+Version:        1.0
+Date :          26/2/2023
+Website:        https://bonben365.com
+Script by:      https://github.com/bonben365
+For detailed script execution: https://bonben365.com/how-to-install-windows-store-in-windows-sandbox-in-windows-11/
+=================================================================================================================
+#>
+
 if (([Security.Principal.WindowsIdentity]::GetCurrent().Groups | Select-String 'S-1-5-32-544').count -eq 0) {    
     Write-Host "Error: Run the script as administrator"
     Write-Host "Exitting..."
