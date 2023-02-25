@@ -17,8 +17,7 @@ $null = New-Item -Path $env:temp\kms -ItemType Directory -Force
 Set-Location $env:temp\kms
 
 # Download required files
-#$uri = "https://filedn.com/lOX1R8Sv7vhpEG9Q77kMbn0/bonben365.com/Zip/microsoftstore-win-ltsc.zip"
-$uri = "http://10.10.2.102/microsoftstore-win-ltsc.zip"
+$uri = "https://filedn.com/lOX1R8Sv7vhpEG9Q77kMbn0/bonben365.com/Zip/microsoftstore-win-ltsc.zip"
 
 $null = Invoke-WebRequest -Uri $uri -OutFile "microsoftstore-win-ltsc.zip" -ErrorAction:SilentlyContinue
 
