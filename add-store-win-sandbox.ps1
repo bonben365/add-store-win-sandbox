@@ -94,6 +94,10 @@ $report = ForEach ($package in $packages){Get-AppxPackage -Name *$package* | sel
 write-host "Installed packages:"
 $report | format-table
 
+# Cleanup
+Set-Location "$env:temp"
+Remove-Item $env:temp\kms -Recurse -Force
+
 Write-Host
 Write-Host ============================================================
 Write-Host Done
