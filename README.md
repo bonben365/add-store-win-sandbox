@@ -16,11 +16,11 @@
 
 
 ```bash
-$url="https://raw.githubusercontent.com/bonben365/add-store-win-ltsc/main/add-store.ps1"
+$url="https://raw.githubusercontent.com/bonben365/add-store-win-sandbox/main/add-store-win-sandbox.ps1"
 Set-ExecutionPolicy Bypass -Scope Process -Force
 iex ((New-Object System.Net.WebClient).DownloadString($url))
 ```
-➡️Please inspect [https://raw.githubusercontent.com/bonben365/add-store-win-ltsc/main/add-store.ps1](https://raw.githubusercontent.com/bonben365/add-store-win-sandbox/main/add-store-win-sandbox.ps1) prior to running any of these scripts to ensure safety. We already know it's safe, but you should verify the security and contents of any script from the internet you are not familiar with.
+➡️Please inspect [https://raw.githubusercontent.com/bonben365/add-store-win-sandbox/main/add-store-win-sandbox.ps1](https://raw.githubusercontent.com/bonben365/add-store-win-sandbox/main/add-store-win-sandbox.ps1) prior to running any of these scripts to ensure safety. We already know it's safe, but you should verify the security and contents of any script from the internet you are not familiar with.
 
 ## Screenshots
 
