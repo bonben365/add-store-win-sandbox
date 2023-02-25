@@ -38,24 +38,6 @@ if (!(Get-ChildItem "*WindowsStore*")) {
     Start-Sleep -Seconds 3
     exit
 }
-else {
-    $packages = Get-ChildItem "*WindowsStore*"
-}
-
-if ((Get-ChildItem "*StorePurchaseApp*")) {    
-    $packages += Get-ChildItem "*StorePurchaseApp*"
-    
-}
-
-if ((Get-ChildItem "*DesktopAppInstaller*")) {    
-    $packages += Get-ChildItem "*DesktopAppInstaller*"
-    
-}
-
-if ((Get-ChildItem "*XboxIdentityProvider*")) {    
-    $packages += Get-ChildItem "*XboxIdentityProvider*"
-    
-}
 
 Write-Host
 Write-Host ============================================================
@@ -63,23 +45,52 @@ Write-Host Installing dependency packages
 Write-Host ============================================================
 Write-Host
 
-$depens = Get-ChildItem | Where-Object { $_.Name -match '^*Microsoft.NET.Native*|^*VCLibs*' }
+if ($arch = "x86") {
+    $depens = Get-ChildItem | Where-Object { ($_.Name -match '^*Microsoft.NET.Native*|^*VCLibs*') -and ($_.Name -like '*x86*')}
+}
+else {
+    $depens = Get-ChildItem | Where-Object { ($_.Name -match '^*Microsoft.NET.Native*|^*VCLibs*') -and ($_.Name -like '*x64*')}
+}
 foreach ($depen in $depens) {
     Add-AppxPackage -Path .\"$depen" -ErrorAction:SilentlyContinue
 }
-
-
-
-if ((Get-ChildItem "*WindowsStore*")) {
 
 Write-Host
 Write-Host ============================================================
 Write-Host Adding Microsoft Store
 Write-Host ============================================================
 Write-Host
-   
-Add-AppxProvisionedPackage -Online
-    -PackagePath Get-ChildItem | Where-Object { ($_.Name -like '*WindowsStore*') -and ($_.Name -like '*AppxBundle*') }  
-    -LicensePath Get-ChildItem | Where-Object { ($_.Name -like '*WindowsStore*') -and ($_.Name -like '*xml*') }
+Add-AppxProvisionedPackage -Online -PackagePath "$(Get-ChildItem | Where-Object { ($_.Name -like '*WindowsStore*') -and ($_.Name -like '*AppxBundle*') })" -LicensePath "$(Get-ChildItem | Where-Object { ($_.Name -like '*WindowsStore*') -and ($_.Name -like '*xml*') })"
 
+if ((Get-ChildItem "*StorePurchaseApp*")) {    
+Write-Host
+Write-Host ============================================================
+Write-Host Adding Store Purchase App
+Write-Host ============================================================
+Write-Host   
+Add-AppxProvisionedPackage -Online -PackagePath "$(Get-ChildItem | Where-Object { ($_.Name -like '*StorePurchaseApp*') -and ($_.Name -like '*AppxBundle*') })" -LicensePath "$(Get-ChildItem | Where-Object { ($_.Name -like '*StorePurchaseApp*') -and ($_.Name -like '*xml*') })"
 }
+
+if ((Get-ChildItem "*DesktopAppInstaller*")) {    
+Write-Host
+Write-Host ============================================================
+Write-Host Adding App Installer
+Write-Host ============================================================
+Write-Host   
+Add-AppxProvisionedPackage -Online -PackagePath "$(Get-ChildItem | Where-Object { ($_.Name -like '*DesktopAppInstaller*') -and ($_.Name -like '*AppxBundle*') })" -LicensePath "$(Get-ChildItem | Where-Object { ($_.Name -like '*DesktopAppInstaller*') -and ($_.Name -like '*xml*') })"
+}
+
+if ((Get-ChildItem "*XboxIdentityProvider*")) {    
+Write-Host
+Write-Host ============================================================
+Write-Host XboxIdentityProvider
+Write-Host ============================================================
+Write-Host   
+Add-AppxProvisionedPackage -Online -PackagePath "$(Get-ChildItem | Where-Object { ($_.Name -like '*XboxIdentityProvider*') -and ($_.Name -like '*AppxBundle*') })" -LicensePath "$(Get-ChildItem | Where-Object { ($_.Name -like '*XboxIdentityProvider*') -and ($_.Name -like '*xml*') })"
+}
+
+Write-Host
+Write-Host ============================================================
+Write-Host Done
+Write-Host ============================================================
+Write-Host 
