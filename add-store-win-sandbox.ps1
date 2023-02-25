@@ -12,6 +12,18 @@ if ([System.Environment]::OSVersion.Version.Build -lt 16299) {
     exit
 }
 
+# Create temporary directory
+$null = New-Item -Path $env:temp\kms -ItemType Directory -Force
+Set-Location $env:temp\kms
+
+# Download required files
+$uri = "https://filedn.com/lOX1R8Sv7vhpEG9Q77kMbn0/bonben365.com/Zip/microsoftstore-win-ltsc.zip"
+
+$null = Invoke-WebRequest -Uri $uri -OutFile "microsoftstore-win-ltsc.zip" -ErrorAction:SilentlyContinue
+
+# Extract downloaded file then run the script
+Expand-Archive .\microsoftstore-win-ltsc.zip -Force -ErrorAction:SilentlyContinue
+Set-Location "$env:temp\kms\microsoftstore-win-ltsc"
 
 if ([System.Environment]::Is64BitOperatingSystem -like "True") {
     $arch = "x64"
@@ -26,11 +38,10 @@ if (!(Get-ChildItem "*WindowsStore*")) {
     exit
 }
 
-if ($arch -eq "x86") {
-    $depens = Get-ChildItem | Where-Object { ($_.Name -match '^*Microsoft.NET.Native*|^*VCLibs*') -and ($_.Name -like '*x86*')}
+if ($arch = "x86") {
+    $depens = Get-ChildItem | Where-Object {($_.Name -match '^*Microsoft.NET.Native*|^*VCLibs*') -and ($_.Name -like '*x86*')}
 } 
-
-if ($arch -eq "x64"){
+if ($arch = "x64") {
     $depens = Get-ChildItem | Where-Object {$_.Name -match '^*Microsoft.NET.Native*|^*VCLibs*'}
 }
 
@@ -79,12 +90,14 @@ Add-AppxProvisionedPackage -Online -PackagePath "$(Get-ChildItem | Where-Object 
 }
 
 # Checking installed apps
-$packages = @("Microsoft.VCLibs","DesktopAppInstaller","WindowsStore","Microsoft.NET.Native.Framework")
+$packages = @("Microsoft.VCLibs","DesktopAppInstaller","WindowsStore","Microsoft.NET.Native")
 $report = ForEach ($package in $packages){Get-AppxPackage -Name *$package* | select Name,Version,Status }
 write-host "Installed packages:"
 $report | format-table
 
-
+# Cleanup
+Set-Location "$env:temp"
+Remove-Item $env:temp\kms -Recurse -Force
 
 Write-Host
 Write-Host ============================================================
