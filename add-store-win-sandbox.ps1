@@ -27,9 +27,7 @@ Set-Location "$env:temp\kms\microsoftstore-win-ltsc"
 
 if ([System.Environment]::Is64BitOperatingSystem -like "True") {
     $arch = "x64"
-}
-else
-{
+} else {
     $arch = "x86"
 }
 
@@ -48,10 +46,10 @@ Write-Host
 
 if ($arch = "x86") {
     $depens = Get-ChildItem | Where-Object { ($_.Name -match '^*Microsoft.NET.Native*|^*VCLibs*') -and ($_.Name -like '*x86*')}
-}
-else {
+} else {
     $depens = Get-ChildItem | Where-Object { ($_.Name -match '^*Microsoft.NET.Native*|^*VCLibs*') -and ($_.Name -like '*x64*')}
 }
+
 foreach ($depen in $depens) {
     Add-AppxPackage -Path .\"$depen" -ErrorAction:SilentlyContinue
 }
