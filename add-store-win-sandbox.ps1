@@ -18,8 +18,7 @@ Set-Location $env:temp\kms
 
 # Download required files
 $uri = "https://filedn.com/lOX1R8Sv7vhpEG9Q77kMbn0/bonben365.com/Zip/microsoftstore-win-ltsc.zip"
-
-$null = Invoke-WebRequest -Uri $uri -OutFile "microsoftstore-win-ltsc.zip" -ErrorAction:SilentlyContinue
+Invoke-WebRequest -Uri $uri -OutFile "microsoftstore-win-ltsc.zip" -ErrorAction:SilentlyContinue
 
 # Extract downloaded file then run the script
 Expand-Archive .\microsoftstore-win-ltsc.zip -Force -ErrorAction:SilentlyContinue
@@ -38,10 +37,10 @@ if (!(Get-ChildItem "*WindowsStore*")) {
     exit
 }
 
-if ($arch = "x86") {
+if ($arch -eq "x86") {
     $depens = Get-ChildItem | Where-Object {($_.Name -match '^*Microsoft.NET.Native*|^*VCLibs*') -and ($_.Name -like '*x86*')}
 } 
-if ($arch = "x64") {
+if ($arch -eq "x64") {
     $depens = Get-ChildItem | Where-Object {$_.Name -match '^*Microsoft.NET.Native*|^*VCLibs*'}
 }
 
