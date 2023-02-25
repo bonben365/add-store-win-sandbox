@@ -38,20 +38,20 @@ if (!(Get-ChildItem "*WindowsStore*")) {
     exit
 }
 
-Write-Host
-Write-Host ============================================================
-Write-Host Installing dependency packages
-Write-Host ============================================================
-Write-Host
-
 if ($arch = "x86") {
     $depens = Get-ChildItem | Where-Object { ($_.Name -match '^*Microsoft.NET.Native*|^*VCLibs*') -and ($_.Name -like '*x86*')}
 } else {
     $depens = Get-ChildItem | Where-Object { ($_.Name -match '^*Microsoft.NET.Native*|^*VCLibs*') -and ($_.Name -like '*x64*')}
 }
 
+Write-Host
+Write-Host ============================================================
+Write-Host Installing dependency packages
+Write-Host ============================================================
+Write-Host
+
 foreach ($depen in $depens) {
-    Add-AppxPackage -Path .\"$depen" -ErrorAction:SilentlyContinue
+    Add-AppxPackage -Path "$depen" -ErrorAction:SilentlyContinue
 }
 
 Write-Host
@@ -89,7 +89,7 @@ Add-AppxProvisionedPackage -Online -PackagePath "$(Get-ChildItem | Where-Object 
 }
 
 # Checking installed apps
-$packages = @("Microsoft.VCLibs","DesktopAppInstaller","WindowsStore")
+$packages = @("Microsoft.VCLibs","DesktopAppInstaller","WindowsStore","Microsoft.NET.Native.Framework")
 $report = ForEach ($package in $packages){Get-AppxPackage -Name *$package* | select Name,Version,Status }
 write-host "Installed packages:"
 $report | format-table
