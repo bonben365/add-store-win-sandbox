@@ -16,7 +16,11 @@
 
 
 ```bash
+#Allow system to running a script
+#https://go.microsoft.com/fwlink/?LinkID=135170
 Set-ExecutionPolicy Bypass -Scope Process -Force
+
+#Download and run the PowerShell script
 $url="https://raw.githubusercontent.com/bonben365/add-store-win-sandbox/main/add-store-win-sandbox.ps1"
 iex ((New-Object System.Net.WebClient).DownloadString($url))
 ```
