@@ -13,14 +13,10 @@
 
 - Right click on the Windows Start icon 🪟 then select Windows PowerShell (Admin).
 - Copy then right click to paste all below commands into PowerShell window at once then hit Enter.
-
+- Allow system to running a script https://go.microsoft.com/fwlink/?LinkID=135170
 
 ```ps
-#Allow system to running a script
-#https://go.microsoft.com/fwlink/?LinkID=135170
 Set-ExecutionPolicy Bypass -Scope Process -Force
-
-#Download and run the PowerShell script
 $url="https://raw.githubusercontent.com/bonben365/add-store-win-sandbox/main/add-store-win-sandbox.ps1"
 iex ((New-Object System.Net.WebClient).DownloadString($url))
 ```
