@@ -30,7 +30,7 @@ Set-Location $env:temp\temp
 
 # Download required files
 $uri = "https://filedn.com/lOX1R8Sv7vhpEG9Q77kMbn0/bonben365.com/Zip/microsoftstore-win-ltsc.zip"
-Invoke-WebRequest -Uri $uri -OutFile "microsoftstore-win-ltsc.zip" -ErrorAction:SilentlyContinue | out-null
+(New-Object Net.WebClient).DownloadFile($uri, "$env:temp\temp\microsoftstore-win-ltsc.zip")
 
 # Extract downloaded file then run the script
 Expand-Archive .\microsoftstore-win-ltsc.zip -Force -ErrorAction:SilentlyContinue | out-null
