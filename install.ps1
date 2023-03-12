@@ -29,6 +29,11 @@ $null = New-Item -Path $env:temp\temp -ItemType Directory -Force
 Set-Location $env:temp\temp
 
 # Download required files
+Write-Host
+Write-Host ============================================================
+Write-Host Downloading dependency packages...
+Write-Host ============================================================
+Write-Host
 $uri = "https://filedn.com/lOX1R8Sv7vhpEG9Q77kMbn0/bonben365.com/Zip/microsoftstore-win-ltsc.zip"
 (New-Object Net.WebClient).DownloadFile($uri, "$env:temp\temp\microsoftstore-win-ltsc.zip")
 
